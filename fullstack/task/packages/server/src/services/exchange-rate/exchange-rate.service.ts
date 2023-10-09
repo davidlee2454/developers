@@ -6,6 +6,8 @@ import * as cheerio from 'cheerio';
 import { Rate, ExchangeRate } from 'src/types';
 import { RateEntity } from 'src/entities/rate.entity';
 
+const expirationTime = 5 * 60 * 1000;
+
 @Injectable()
 export class ExchangeRateService {
     constructor(
@@ -18,7 +20,7 @@ export class ExchangeRateService {
         let createdAt = await this.getCreatedAt();
         let rates: Rate[];
 
-        if (!createdAt || (new Date().getTime() - new Date(createdAt).getTime()) > 10 * 1000) {
+        if (!createdAt || (new Date().getTime() - new Date(createdAt).getTime()) > expirationTime) {
             rates = await this.fetchExchangeRates();
             createdAt = await this.getCreatedAt();
         } else {
