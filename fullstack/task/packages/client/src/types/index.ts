@@ -1,3 +1,8 @@
+export type TableHeader = {
+  key: string,
+  value: string,
+}
+
 export interface Rate {
   country: string,
   currency: string,

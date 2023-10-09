@@ -1,43 +1,58 @@
 import React from 'react';
+import styled from "styled-components";
+import { Rate } from 'src/types';
 
 export interface ITableComponentProps {
-  className?: string,
-  headers: {
-    key: string,
-    value: string,
-  }[],
-  rows: any,
+  rates: Rate[],
 }
 
+export const Table = styled.table`
+    td,
+    th {
+        padding: 10px;
+    }
+
+    th {
+        background: #1C76E2;
+        color: white;
+    }
+
+    tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
+
+    tr:hover {
+        background-color: #ddd;
+    }
+`
+
 export const TableComponent: React.FC<ITableComponentProps> = (props) => {
-  const { headers, rows, className } = props;
+  const { rates } = props;
 
   return (
-    <table className={`min-w-full text-left text-sm font-light ${className}`}>
-      <thead className="border-b font-medium">
+    <Table>
+      <thead>
         <tr>
-          {
-            headers.map(row =>
-              <th key={row.key} scope="col" className="px-6 py-4">{row.value}</th>
-            )
-          }
+          <th scope="col">Country</th>
+          <th scope="col">Currency</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Code</th>
+          <th scope="col">Rate</th>
         </tr>
       </thead>
       <tbody>
         {
-          rows && rows.map((row: any, index: number) =>
-            <tr
-              key={index}
-              className="border-b transition duration-300 ease-in-out hover:bg-neutral-100">
-              {
-                headers.map((header, index) =>
-                  <td key={index} className="whitespace-nowrap px-6 py-4">{row[header.key]}</td>
-                )
-              }
+          rates && rates.map((rate: Rate, index: number) =>
+            <tr key={index}>
+              <td>{rate.country}</td>
+              <td>{rate.currency}</td>
+              <td>{rate.amount}</td>
+              <td>{rate.code}</td>
+              <td>{rate.rate}</td>
             </tr>
           )
         }
       </tbody>
-    </table>
+    </Table>
   )
 }
