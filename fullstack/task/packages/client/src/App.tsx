@@ -26,6 +26,14 @@ function App() {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (rates.length) {
+      setTimeout(() => {
+        setTimestamp((prev: number) => prev + 1000);
+      }, 1000);
+    }
+  }, [rates, timestamp])
+
   return <>
     <Span>{loading ? 'loading...' : timestampToText(timestamp)}</Span>
     <TableComponent
